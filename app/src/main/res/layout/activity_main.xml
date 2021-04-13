@@ -19,7 +19,6 @@
             android:id="@+id/rv_jokeList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layoutAnimation="@anim/item_layout_animation"
             android:orientation="vertical"
             tools:listitem="@layout/joke_item" />
 

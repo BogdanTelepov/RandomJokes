@@ -3,6 +3,7 @@ package ru.btelepov.app.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -41,6 +42,7 @@ class JokeListAdapter : RecyclerView.Adapter<JokeListAdapter.MyViewHolder>() {
         holder.itemView.apply {
             item_setupTv.text = currentJoke.setup.trim()
             item_punchlineTv.text = currentJoke.punchline.trim()
+            cardView.startAnimation(AnimationUtils.loadAnimation(context, R.anim.item_anim))
         }
     }
 

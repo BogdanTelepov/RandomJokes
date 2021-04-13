@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
@@ -17,29 +18,30 @@
         android:background="#33B3FF">
 
         <ImageView
-            android:layout_marginTop="2dp"
+            android:id="@+id/iv_joke"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/ic_joke"
             android:layout_centerHorizontal="true"
-            android:id="@+id/iv_joke"/>
+            android:layout_marginTop="2dp"
+            android:src="@drawable/ic_joke" />
 
         <TextView
-            android:layout_below="@id/iv_joke"
-            android:textStyle="italic"
+            android:layout_marginStart="1dp"
+            android:layout_marginEnd="1dp"
             android:id="@+id/item_setupTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_below="@id/iv_joke"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/roboto_medium_italic"
             android:text="setup"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="italic" />
 
         <TextView
-            android:textStyle="bold"
             android:id="@+id/item_punchlineTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -51,7 +53,8 @@
             android:text="punchline"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

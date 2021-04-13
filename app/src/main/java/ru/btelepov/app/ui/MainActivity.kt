@@ -25,16 +25,18 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
 
         setContentView(binding.root)
+
         initialize()
-        mainActivityViewModel.getRandomJoke()
+        initAdapter()
         fetchJokes()
 
         binding.refreshButton.setOnClickListener {
-            fetchJokes()
+            mainActivityViewModel.getRandomJoke()
+
         }
 
         binding.swipeLayout.setOnRefreshListener {
-            fetchJokes()
+            mainActivityViewModel.getRandomJoke()
         }
 
     }
@@ -46,25 +48,31 @@ class MainActivity : AppCompatActivity() {
         mainActivityViewModel =
             ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
-        jokeListAdapter = JokeListAdapter()
+
     }
 
 
     private fun fetchJokes() {
+        mainActivityViewModel.getRandomJoke()
         binding.swipeLayout.isRefreshing = true
         mainActivityViewModel.responseGetRandomJoke.observe(this, { response ->
             if (response.isSuccessful) {
                 binding.swipeLayout.isRefreshing = false
                 jokeListAdapter.differ.submitList(response.body()?.toList())
-                binding.rvJokeList.apply {
-                    adapter = jokeListAdapter
-                    layoutManager = LinearLayoutManager(this@MainActivity)
-                    startLayoutAnimation()
-                }
+
             } else {
                 binding.swipeLayout.isRefreshing = false
             }
         })
 
+    }
+
+    private fun initAdapter() {
+        jokeListAdapter = JokeListAdapter()
+        binding.rvJokeList.apply {
+            adapter = jokeListAdapter
+            layoutManager = LinearLayoutManager(this@MainActivity)
+
+        }
     }
 }
