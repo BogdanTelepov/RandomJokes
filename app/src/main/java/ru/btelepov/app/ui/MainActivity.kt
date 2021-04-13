@@ -2,11 +2,13 @@ package ru.btelepov.app.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import ru.btelepov.app.adapters.JokeListAdapter
 import ru.btelepov.app.databinding.ActivityMainBinding
 import ru.btelepov.app.repository.MainRepository
+import ru.btelepov.app.utilits.Resource
 import ru.btelepov.app.viewmodels.MainActivityViewModel
 import ru.btelepov.app.viewmodels.ViewModelFactory
 
@@ -44,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initialize() {
         mainRepository = MainRepository()
-        viewModelFactory = ViewModelFactory(mainRepository)
+        viewModelFactory = ViewModelFactory(mainRepository, application)
         mainActivityViewModel =
             ViewModelProvider(this, viewModelFactory).get(MainActivityViewModel::class.java)
 
@@ -56,12 +58,22 @@ class MainActivity : AppCompatActivity() {
         mainActivityViewModel.getRandomJoke()
         binding.swipeLayout.isRefreshing = true
         mainActivityViewModel.responseGetRandomJoke.observe(this, { response ->
-            if (response.isSuccessful) {
-                binding.swipeLayout.isRefreshing = false
-                jokeListAdapter.differ.submitList(response.body()?.toList())
-
-            } else {
-                binding.swipeLayout.isRefreshing = false
+            when (response) {
+                is Resource.Success -> {
+                    binding.swipeLayout.isRefreshing = false
+                    response.data?.let { newResponse ->
+                        jokeListAdapter.differ.submitList(newResponse.toList())
+                    }
+                }
+                is Resource.Error -> {
+                    binding.swipeLayout.isRefreshing = false
+                    response.message?.let {
+                        Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+                    }
+                }
+                is Resource.Loading -> {
+                    binding.swipeLayout.isRefreshing = true
+                }
             }
         })
 

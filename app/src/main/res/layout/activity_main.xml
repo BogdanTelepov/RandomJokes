@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#898989"
+    android:background="@color/grey_main_background"
     android:orientation="vertical"
     tools:context=".ui.MainActivity">
 
@@ -35,7 +35,7 @@
         android:layout_centerHorizontal="true"
 
         android:layout_marginBottom="10dp"
-        android:text="Refresh Jokes"
+        android:text="@string/refresh_jokes"
         android:textAllCaps="false" />
 
 </RelativeLayout>
